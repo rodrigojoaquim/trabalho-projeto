@@ -187,7 +187,5 @@
             body.style.background = "rgb(0,0,0,0)";
         }
     });
-    nigga
-    nigger
 </script>
 </html>
