@@ -1,0 +1,172 @@
+body{
+    color: black;
+    margin: 0;
+    font-family: Arial;
+    background-color: white;
+}
+
+#nav{
+    color: white;
+    background-color: #000000;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100px;
+    z-index: 1;
+}
+
+#nav>#center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -ms-transform: rotateY(-50%);
+    font-size: 23px;
+    display: flex;
+    left: 5%;
+    right: 5%;
+    justify-content: space-between;
+}
+
+#blurnav{
+    position: fixed;
+    color: white;
+    background-color: #000000;
+    width: 100%;
+    top: 0;
+    height: 100px;
+    z-index: 1;
+}
+
+#carro{
+    cursor: pointer;
+    display: flex;
+    padding-top: 5px;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    border: 0px;
+}
+
+#pesquisa{
+    width: 100%;
+    border-style: none;
+    color: black;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+#pesquisa:focus{
+    outline: none;
+}
+
+
+#inicio{
+    margin-top: 6vw;
+    margin-bottom: 30px;
+}
+
+#front{    
+    height: 45vw;
+}
+
+#front>img{
+    width: 100%;
+}
+
+#titulo{
+    justify-items: center;
+    display: grid;
+    font-family: 'Arial';
+    font-size: 24px;
+}
+
+#container{
+    display: flex;
+    margin-right: 40px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+#item{
+    
+    width: 200px;
+    height: 250px;
+    border-radius: 10px;
+    transition: 0.3s;
+    outline-color: #5a5a5a4b;
+    margin-bottom:10px;
+    margin-right: 5vw;
+}
+
+#item:hover{
+    box-shadow: 10px 10px rgba(114, 114, 114, 0.267);
+    transition: 0.3s;
+    outline: #5a5a5a4b solid;
+}
+
+#logo{
+    margin-top: 5px;
+    width: 7vw;
+}
+
+#bar{
+    width: 40%;
+    display: flex;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.fa-search{
+    color: black;
+    margin-top: 0px;
+    background-color: white;
+    padding-top: 5px;
+    border-radius: 30px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+#logo>img{
+    position: absolute;
+    top:0px;
+}
+
+#image>img{
+    height: 10vw;
+}
+
+#image{
+    text-align: center;
+}
+
+#nome{
+    text-align: center;
+    font-size: 23px;
+    height: 4vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+#preco{
+    text-align: center;
+    font-size: 20px;
+    color: red;
+}
+
+footer{
+    background-color: black;
+    color: white;
+}
+
+#carrinho{
+    border-radius: 10px;
+    height: 100vh;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: 250px;
+    border-left: black;
+    background-color: white;
+    z-index: 2;
+    transform: translateX(250px);
+}
