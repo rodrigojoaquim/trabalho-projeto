@@ -169,4 +169,5 @@ footer{
     background-color: white;
     z-index: 2;
     transform: translateX(250px);
+    font: 22px "Arial";
 }
