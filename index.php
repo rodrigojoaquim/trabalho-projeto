@@ -1,28 +1,5 @@
 <?php
-    $host = "localhost"; // Ou IP do servidor da base de dados
-    $dbname = "loja";
-    $usuario = "root"; // Altera conforme as credenciais
-    $senha = ""; // Adiciona a senha se houver
-
-    session_start();
-
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        die("Erro na conexão: " . $e->getMessage());
-    }
-
-    try {
-        $stmt = $pdo->query("SELECT * FROM produtos where class = 'novidade'");
-        $novidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $stmt = $pdo->query("SELECT * FROM produtos where class = 'descontos'");
-        $descontos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $stmt = $pdo->query("SELECT * FROM produtos where class = 'eletronicos'");
-        $eletronicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        die("Erro ao buscar produtos: " . $e->getMessage());
-    }
+    require_once 'class/conection.php';
 ?>
 
 
@@ -56,9 +33,11 @@
                     <i class="fa fa-search"></i>
                 </div>
                 <div id="butoes">
-                    <button type="button" id= "carro" onclick = "carrinhos()">
+                    <a type="button" id= "account" href = "login.php">
+                        <i class='fa fa-user-circle'></i>
+                    </a>
+                    <button type="button" id= "car" onclick = "carrinhos()">
                         <i class='fa fa-shopping-cart'> </i>
-                        Carrinho
                     </button>
                 </div>
             </div>

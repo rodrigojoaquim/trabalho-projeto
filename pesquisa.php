@@ -1,29 +1,5 @@
 <?php
-    $host = "localhost"; // Ou IP do servidor da base de dados
-    $dbname = "loja";
-    $usuario = "root"; // Altera conforme as credenciais
-    $senha = ""; // Adiciona a senha se houver
-
-    session_start();
-    $produtos = [];
-
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        die("Erro na conexão: " . $e->getMessage());
-    } 
-
-    if (isset($_GET['pesquisa'])) {
-        $mensagem = urldecode($_GET['pesquisa']);
-        $query = "SELECT * From produtos where nome LIKE '%$mensagem%'";
-        try {
-            $stmt = $pdo->query($query);
-            $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            die("Erro ao buscar produtos: " . $e->getMessage());
-        }
-    }
+    require_once 'class/conection.php';
 ?>
 
 
@@ -33,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="css/css.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 </head>
@@ -52,9 +28,11 @@
                     <i class="fa fa-search"></i>
                 </div>
                 <div id="butoes">
-                    <button type="button" id= "carro" onclick = "carrinhos()">
+                    <a type="button" id= "account" href = "login.php">
+                        <i class='fa fa-user-circle'></i>
+                    </a>
+                    <button type="button" id= "car" onclick = "carrinhos()">
                         <i class='fa fa-shopping-cart'> </i>
-                        Carrinho
                     </button>
                 </div>
             </div>
