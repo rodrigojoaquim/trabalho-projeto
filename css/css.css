@@ -25,6 +25,7 @@ body{
     left: 5%;
     right: 5%;
     justify-content: space-between;
+    height: 36px;
 }
 
 #blurnav{
@@ -37,14 +38,36 @@ body{
     z-index: 1;
 }
 
-#carro{
+#account{
     cursor: pointer;
-    display: flex;
     padding-top: 5px;
     font-size: 20px;
     background-color: black;
     color: white;
     border: 0px;
+    font-size: 35px;
+    position: absolute;
+    bottom: 0px;
+    right: 50px;
+    padding: 0px;
+}
+
+#car{
+    right: 0px;
+    cursor: pointer;
+    padding-top: 5px;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    border: 0px;
+    font-size: 35px;
+    position: absolute;
+    bottom: 0px;
+    padding: 0px;
+}
+
+#butoes{
+    display: flex;
 }
 
 #pesquisa{
@@ -169,5 +192,5 @@ footer{
     background-color: white;
     z-index: 2;
     transform: translateX(250px);
-    font: 22px "Arial";
+    font-size: 22px;
 }
