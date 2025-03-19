@@ -41,26 +41,25 @@ body{
 #account{
     cursor: pointer;
     padding-top: 5px;
-    font-size: 20px;
+    font-size: 27px;
     background-color: black;
     color: white;
     border: 0px;
-    font-size: 35px;
     position: absolute;
     bottom: 0px;
     right: 50px;
     padding: 0px;
+    text-decoration: none;
 }
 
 #car{
     right: 0px;
     cursor: pointer;
     padding-top: 5px;
-    font-size: 20px;
+    font-size: 27px;
     background-color: black;
     color: white;
     border: 0px;
-    font-size: 35px;
     position: absolute;
     bottom: 0px;
     padding: 0px;
@@ -187,10 +186,10 @@ footer{
     position: fixed;
     right: 0px;
     top: 0px;
-    width: 250px;
+    width: 350px;
     border-left: black;
     background-color: white;
     z-index: 2;
-    transform: translateX(250px);
+    transform: translateX(350px);
     font-size: 22px;
 }

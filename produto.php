@@ -22,8 +22,6 @@
     }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,84 +59,10 @@
         </div>
     </div>
     <div id ="blur">
-        <section id="inicio">
-            <div id = "front">
-                <img src="img/arduino.png">
-            </div>
-            <div id="section">
-                <div>
-                    <p id="titulo">Novidades</p>
-                </div>
-                <div id="container">
-                    <?php 
-                        for ($i = 0; $i < 5; $i++) {
-                            echo '  <div id="item" onclick = "item('.$novidade[$i]['id_produto'].')">
-                                        <div id="image">
-                                            <img src="'.$novidade[$i]['img'].'">
-                                        </div>
-                                        <div id="nome">
-                                            '.$novidade[$i]['nome'].'
-                                        </div>
-                                        <div id="preco">
-                                            '.$novidade[$i]['preco'].'€
-                                        </div>
-                                    </div>';
-                        }
-                    ?>
-                </div>
-            </div>
-            <div id="section">
-                <br><br><br>
-                <div>
-                    <p id="titulo">Descontos</p>
-                </div>
-                <div id="container">
-                    <?php 
-                        for ($i = 0; $i < 5; $i++) {
-                            echo '  <div id="item" onclick = "item('.$descontos[$i]['id_produto'].')">
-                                        <div id="image">
-                                            <img src="'.$descontos[$i]['img'].'">
-                                        </div>
-                                        <div id="nome">
-                                            '.$descontos[$i]['nome'].'
-                                        </div>
-                                        <div id="preco">
-                                            '.$descontos[$i]['preco'].'€
-                                        </div>
-                                    </div>';
-                        }
-                    ?>
-                </div>
-            </div>
-            <div id="section">
-                <br><br><br>
-                <div>
-                    <p id="titulo">Eletronicos</p>
-                </div>
-                <div id="container">
-                    <?php 
-                        for ($i = 0; $i < 5; $i++) {
-                            echo '  <div id="item" onclick = "item('.$eletronicos[$i]['id_produto'].')">
-                                        <div id="image">
-                                            <img src="'.$eletronicos[$i]['img'].'">
-                                        </div>
-                                        <div id="nome">
-                                            '.$eletronicos[$i]['nome'].'
-                                        </div>
-                                        <div id="preco">
-                                            '.$eletronicos[$i]['preco'].'€
-                                        </div>
-                                    </div>';
-                        }
-                    ?>
-                </div>
-            </div>
+        <section id ="inicio">
+
         </section>
-        <footer>
-            teste
-        </footer>
     </div>
-    
 </body>
 <script>
     const pesquisa = document.getElementById('pesquisa');
@@ -150,6 +74,10 @@
     const body = document.body;
     let open = false;
 
+    if (document.documentElement.scrollHeight === window.innerHeight){
+        center.style.marginRight = "17px";
+    }
+
     pesquisa.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {           
 
@@ -160,7 +88,7 @@
     carrinho.style.transition = "all 1.5s";
     function carrinhos(){
         carrinho.style.transform = "translateX(0px)";
-        blur.style.filter = "brightness(50%) blur(5px)";
+        blur.style.filter = "brightness(50%)";
         inicio.style.marginTop = "0px";
         inicio.style.paddingTop = "6vw";
         nav.style.filter = "brightness(50%)";
@@ -182,14 +110,12 @@
             nav.style.filter = "brightness(100%)";
             body.style.overflow = "visible";
             body.style.marginRight = "0px";
-            center.style.marginRight = "0px";
+            if (document.documentElement.scrollHeight === window.innerHeight){
+                center.style.marginRight = "17px";
+            } 
             open = false;
             body.style.background = "rgb(0,0,0,0)";
         }
     });
-
-    function item(index){
-        console.log(index)
-    }
 </script>
 </html>

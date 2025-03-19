@@ -1,5 +1,25 @@
 <?php
     require_once 'class/conection.php';
+    $user = NULL;
+    $output = "Login";
+    $icon="fa fa-arrow-right ms-3";
+
+    if ($_SESSION) {
+        $time = $_SESSION['time'];
+        $user = $_SESSION['username'];
+
+        if ($user != NULL && time() < $time + 1000) {
+            $output = $user;
+            $icon="";
+        }else {
+            $output = "Login";
+            session_destroy();
+            echo '<script type="text/javascript">
+            alert("Sessão Expirada");
+            </script>';
+            $icon="fa fa-arrow-right ms-3";
+        }
+    }
 ?>
 
 
@@ -30,6 +50,7 @@
                 <div id="butoes">
                     <a type="button" id= "account" href = "login.php">
                         <i class='fa fa-user-circle'></i>
+                        <?php echo $output;?>
                     </a>
                     <button type="button" id= "car" onclick = "carrinhos()">
                         <i class='fa fa-shopping-cart'> </i>
@@ -49,7 +70,7 @@
                     echo '<div id="container">';
                     foreach ($produtos as $key) {
                         if($j == 4){
-                            echo '  <div id="item" style="margin-right:0px;">
+                            echo '  <div id="item" style="margin-right:0px;" onclick = "item('.$key['id_produto'].')">
                                         <div id="image">
                                             <img src="'.$key['img'].'">
                                         </div>
@@ -61,7 +82,7 @@
                                         </div>
                                     </div>';
                         }else{
-                            echo '  <div id="item">
+                            echo '  <div id="item" onclick = "item('.$key['id_produto'].')">
                                         <div id="image">
                                             <img src="'.$key['img'].'">
                                         </div>
@@ -132,10 +153,15 @@
             nav.style.filter = "brightness(100%)";
             body.style.overflow = "visible";
             body.style.marginRight = "0px";
-            center.style.marginRight = "0px";
+            if (document.documentElement.scrollHeight === window.innerHeight){
+                center.style.marginRight = "17px";
+            } 
             open = false;
             body.style.background = "rgb(0,0,0,0)";
         }
     });
+    function item(index){
+        console.log(index)
+    }
 </script>
 </html>
