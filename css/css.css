@@ -233,7 +233,7 @@ footer{
 }
 
 #quantidade{
-    -moz-appearance:textfield;
+    appearance:textfield;
     border: 1px solid rgb(94, 93, 93);
     height: 52px;
     width: 42px;
