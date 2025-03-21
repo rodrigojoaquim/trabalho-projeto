@@ -26,10 +26,20 @@
 
     if (isset($_GET['pesquisa'])) {
         $mensagem = urldecode($_GET['pesquisa']);
-        $query = "SELECT * From produtos where nome LIKE '%$mensagem%'";
+        $pesquisa = "SELECT * From produtos where nome LIKE '%$mensagem%'";
+        try {
+            $stmt = $pdo->query($pesquisa);
+            $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erro ao buscar produtos: " . $e->getMessage());
+        }
+    }
+    if (isset($_GET['id'])) {
+        $idprod = urldecode($_GET['id']);
+        $query = "SELECT * From produtos where id_produto = $idprod";
         try {
             $stmt = $pdo->query($query);
-            $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $produto = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erro ao buscar produtos: " . $e->getMessage());
         }

@@ -20,6 +20,13 @@
             $icon="fa fa-arrow-right ms-3";
         }
     }
+    $id = $_GET['id'];
+    if(isset($_POST['login'])){
+        $_SESSION['page'] = "produto.php?id=".$id;
+        $newURL="login.php";
+        header('Location: '.$newURL);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -47,20 +54,43 @@
                     <i class="fa fa-search"></i>
                 </div>
                 <div id="butoes">
-                    <a type="button" id= "account" href = "login.php">
-                        <i class='fa fa-user-circle'></i>
-                        <?php echo $output;?>
-                    </a>
-                    <button type="button" id= "car" onclick = "carrinhos()">
-                        <i class='fa fa-shopping-cart'> </i>
-                    </button>
+                    <form method="post">
+                        <button type="submit" id= "account" name = "login">
+                            <i class='fa fa-user-circle'></i>
+                            <?php echo $output;?>
+                        </button>
+                        <button type="button" id= "car" onclick = "carrinhos()">
+                            <i class='fa fa-shopping-cart'> </i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     <div id ="blur">
         <section id ="inicio">
-
+            <div id="img">
+                <img src="<?php echo $produto[0]['img']; ?>" width = "350px" >
+                <div id = "text">
+                    <div id = "nome-produto">
+                        <?php echo $produto[0]['nome']; ?>
+                    </div>
+                    <div id = "descricao-produto">
+                        <?php echo $produto[0]['descricao']; ?>
+                    </div>
+                    <div id = "preco-produto">
+                        <?php echo $produto[0]['preco']; ?> €
+                    </div>
+                    <div id="btn">
+                        <input type="number" id ="quantidade" value="1" min="1">
+                        <div style="display:grid">
+                            <button type="button"><i class='fa fa-angle-up' style='font-size:24px'></i></button>
+                            <button type="button"><i class='fa fa-angle-down' style='font-size:24px'></i></button>
+                        </div>
+                        <button type="button" id = "btn-compra">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </body>

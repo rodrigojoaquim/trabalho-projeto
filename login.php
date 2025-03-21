@@ -106,7 +106,7 @@ require_once 'class/conection.php';
                 if(login($email,$senha))
                 {
                     echo "Login bem";
-                    $newURL="index.php";
+                    $newURL=$_SESSION['page'];
                     header('Location: '.$newURL);
                     $_SESSION['time']=time();
                     
@@ -115,8 +115,8 @@ require_once 'class/conection.php';
                 }
 			}else{
 				echo "Preencha todos os campos";
-				}
 			}
+		}
 	?>
     </div>
     
