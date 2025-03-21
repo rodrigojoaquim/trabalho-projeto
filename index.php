@@ -20,6 +20,11 @@
             $icon="fa fa-arrow-right ms-3";
         }
     }
+    if(isset($_POST['login'])){
+        $_SESSION['page'] = "/trabalho projeto";
+        $newURL="login.php";
+        header('Location: '.$newURL);
+    }
 ?>
 
 
@@ -49,13 +54,15 @@
                     <i class="fa fa-search"></i>
                 </div>
                 <div id="butoes">
-                    <a type="button" id= "account" href = "login.php">
-                        <i class='fa fa-user-circle'></i>
-                        <?php echo $output;?>
-                    </a>
-                    <button type="button" id= "car" onclick = "carrinhos()">
-                        <i class='fa fa-shopping-cart'> </i>
-                    </button>
+                    <form method="post">
+                        <button type="submit" id= "account" name = "login">
+                            <i class='fa fa-user-circle'></i>
+                            <?php echo $output;?>
+                        </button>
+                        <button type="button" id= "car" onclick = "carrinhos()">
+                            <i class='fa fa-shopping-cart'> </i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -138,7 +145,6 @@
             teste
         </footer>
     </div>
-    
 </body>
 <script>
     const pesquisa = document.getElementById('pesquisa');
@@ -189,7 +195,7 @@
     });
 
     function item(index){
-        console.log(index)
+        window.location.href = "produto.php?id=" + encodeURIComponent(index);
     }
 </script>
 </html>
