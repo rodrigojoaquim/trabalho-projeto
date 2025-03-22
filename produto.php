@@ -1,25 +1,6 @@
 <?php
     require_once 'class/conection.php';
-    $user = NULL;
-    $output = "Login";
-    $icon="fa fa-arrow-right ms-3";
-
-    if ($_SESSION) {
-        $time = $_SESSION['time'];
-        $user = $_SESSION['username'];
-
-        if ($user != NULL && time() < $time + 1000) {
-            $output = $user;
-            $icon="";
-        }else {
-            $output = "Login";
-            session_destroy();
-            echo '<script type="text/javascript">
-            alert("Sessão Expirada");
-            </script>';
-            $icon="fa fa-arrow-right ms-3";
-        }
-    }
+    
     $id = $_GET['id'];
     if(isset($_POST['login'])){
         $_SESSION['page'] = "produto.php?id=".$id;
@@ -40,7 +21,11 @@
 </head>
 <body>
     <div id = "carrinho">
-        <img src="img/no_image.png">
+        <?php 
+            foreach ($carrinho as $key){
+                echo $key['nome'].'<br>';
+            }
+        ?>
     </div>
     
     <div id = "blurnav">
@@ -81,19 +66,29 @@
                     <div id = "preco-produto">
                         <?php echo $produto[0]['preco']; ?> €
                     </div>
-                    <div id="btn">
-                        <input type="number" id ="quantidade" value="1" min="1">
+                    <form method="POST" id="btn">
+                        <input type="number" id ="quantidade" value="1" min="1" name = quantidade>
                         <div style="display:grid">
-                            <button type="button"><i class='fa fa-angle-up' style='font-size:24px'></i></button>
-                            <button type="button"><i class='fa fa-angle-down' style='font-size:24px'></i></button>
+                            <button type="button" onclick="aumentar()"><i class='fa fa-angle-up' style='font-size:24px'></i></button>
+                            <button type="button" onclick="diminuir()"><i class='fa fa-angle-down' style='font-size:24px'></i></button>
                         </div>
-                        <button type="button" id = "btn-compra">Adicionar ao Carrinho</button>
-                    </div>
+                        <button type="submit" id = "btn-compra" name = "adicionar">Adicionar ao Carrinho</button>
+                    </form>
                 </div>
+            </div>
+            <div id = "descricao">
+                <?php echo $produto[0]['descricao_comp']; ?>
             </div>
         </section>
     </div>
 </body>
+<?php
+    if(isset($_POST['adicionar'])){
+        adicionar( $_SESSION['id'],$_GET['id'],$_POST['quantidade']);
+    }
+?>
+
+
 <script>
     const pesquisa = document.getElementById('pesquisa');
     const carrinho = document.getElementById('carrinho');
@@ -102,6 +97,7 @@
     const center = document.getElementById('center');
     const inicio = document.getElementById('inicio');
     const body = document.body;
+    const quantidade = document.getElementById('quantidade');
     let open = false;
 
     if (document.documentElement.scrollHeight === window.innerHeight){
@@ -147,5 +143,23 @@
             body.style.background = "rgb(0,0,0,0)";
         }
     });
+
+    quantidade.addEventListener("change", function(){
+        if(Number(quantidade.value) === 0 || quantidade.value<1 ){
+            quantidade.value = 1;
+        }
+    })
+
+    function aumentar(){
+        quantidade.value = Number(quantidade.value) + 1;
+       
+    }
+    function diminuir(){
+        if(quantidade.value>1){
+            quantidade.value = Number(quantidade.value) - 1;
+        }else{
+            quantidade.value = 1
+        }
+    }
 </script>
 </html>

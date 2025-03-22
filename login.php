@@ -109,6 +109,7 @@ require_once 'class/conection.php';
                     $newURL=$_SESSION['page'];
                     header('Location: '.$newURL);
                     $_SESSION['time']=time();
+                    $_SESSION['sessao'] = true;
                     
                 }else{
                     echo "Credenciais Erradas";
