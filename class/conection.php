@@ -3,8 +3,14 @@
     $dbname = "loja";
     $usuario = "root"; // Altera conforme as credenciais
     $senha = ""; // Adiciona a senha se houver
+    $user = NULL;
+    $output = "Login";
 
     session_start();
+
+    $sessao = $_SESSION['sessao'];
+
+
 
     try {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);
@@ -20,9 +26,26 @@
         $descontos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt = $pdo->query("SELECT * FROM produtos where class = 'eletronicos'");
         $eletronicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
     } catch (PDOException $e) {
         die("Erro ao buscar produtos: " . $e->getMessage());
     }
+
+    if ($sessao){
+        $time = $_SESSION['time'];
+        $user = $_SESSION['username'];
+
+        if ($user != NULL && time() < $time + 1000){
+            $output = $user;
+        }else{
+            $output = "Login";
+            echo '<script type="text/javascript">
+            alert("Sessão Expirada");
+            </script>'; 
+            $_SESSION['sessao'] = false;
+        }
+    }
+    
 
     if (isset($_GET['pesquisa'])) {
         $mensagem = urldecode($_GET['pesquisa']);
@@ -44,11 +67,33 @@
             die("Erro ao buscar produtos: " . $e->getMessage());
         }
     }
+
+    try {
+        if($user != null){
+            $stmt = $pdo->query("SELECT produtos.nome FROM user JOIN carrinho ON user.id_user = carrinho.user_id JOIN produtos ON carrinho.product_id = produtos.id_produto where user.id_user = ".$_SESSION['id']);
+            $carrinho = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    } catch (PDOException $e) {
+        die("Erro ao buscar produtos: " . $e->getMessage());
+    }
+
+    function adicionar($id, $id_prod, $quantidade){
+
+        global $pdo;
+
+        $sql=$pdo->prepare("INSERT INTO carrinho (user_id, product_id,quantidade) VALUES (:u, :p, :q)");
+        $sql->bindValue(":u", $id);
+        $sql->bindValue(":p", $id_prod);
+        $sql->bindValue(":q", $quantidade);
+        $sql->execute();
+        return true;
+    }
+
     function login($email, $senha)
 	{
         global $pdo;
 
-		$nome=$pdo->prepare("SELECT nome FROM user WHERE email=:e AND senha=:s");
+		$nome=$pdo->prepare("SELECT id_user, nome FROM user WHERE email=:e AND senha=:s");
         $nome->bindValue(":e",$email);
 		$nome->bindValue(":s",md5($senha));
 		$nome->execute();
@@ -56,8 +101,8 @@
 		{
 			//entrar no sistema (sessão)
 			$dado=$nome->fetch();
-			session_start();
 			$_SESSION['username']=$dado['nome'];
+            $_SESSION['id']=$dado['id_user'];
 			return true; //registado com sucesso
 		}
 		else

@@ -1,25 +1,6 @@
 <?php
     require_once 'class/conection.php';
-    $user = NULL;
-    $output = "Login";
-    $icon="fa fa-arrow-right ms-3";
-
-    if ($_SESSION) {
-        $time = $_SESSION['time'];
-        $user = $_SESSION['username'];
-
-        if ($user != NULL && time() < $time + 1000) {
-            $output = $user;
-            $icon="";
-        }else {
-            $output = "Login";
-            session_destroy();
-            echo '<script type="text/javascript">
-            alert("Sessão Expirada");
-            </script>';
-            $icon="fa fa-arrow-right ms-3";
-        }
-    }
+    
     if(isset($_POST['login'])){
         $_SESSION['page'] = "/trabalho projeto";
         $newURL="login.php";
@@ -40,7 +21,11 @@
 </head>
 <body>
     <div id = "carrinho">
-        <img src="img/no_image.png">
+        <?php 
+            foreach ($carrinho as $key){
+                echo $key['nome'].'<br>';
+            }
+        ?>
     </div>
     
     <div id = "blurnav">
