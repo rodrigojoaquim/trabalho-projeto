@@ -134,9 +134,17 @@
                 </div>
             </div>
         </section>
-        <footer>
-            teste
-        </footer>
+    <footer>
+        <hr>
+        <a>ELETROZONE</a>
+        <br>
+        <div>© ELETROZONE</div>
+        <br>
+        <div> 
+            Legal Stuff | Privacy Policy | Security | Website Accessibility | Manage Cookies
+        </div>
+        <hr>
+    </footer>
     </div>
 </body>
 <script>

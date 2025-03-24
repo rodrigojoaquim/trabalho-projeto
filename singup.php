@@ -7,42 +7,52 @@ require_once 'class/conection.php';
 <head>
     <meta charset="UTF-8">
     <title>Registe-se</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/css.css">
 </head>
 
 <body>
-    <div class="container-reg">
-        <div class="login-box">
-        <h2>Registe-se</h2>
-        <form method="POST">
+    <div id = "blurnav">
+        <div id = "nav">
+            <div id="center">
+                <a id="logo" href="/trabalho projeto">
+                    <img src="img/logo.png" width="150vw">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id = "login">
+        <div id="login-box">
+            <h2>Registe-se</h2>
+            <form method="POST">
 
             <!--Nome-->
-            <div class="input-box">
+            <div id="input-box">
                 <input type="text" name="nome" maxlength="30" required>
                 <label>Nome</label>
             </div>
 
             <!--Telemovel-->
-            <div class="input-box">
+            <div id="input-box">
                 <input type="text" name="telefone" maxlength="30" required>
                 <label>Telemovel</label>
             </div>                
             
             <!--Email-->
-            <div class="input-box">
+            <div id="input-box">
                 <input type="email" name="email"  maxlength="40" required>
                 <label>Email</label>
             </div>
 
             <!--Password-->
-            <div class="input-box">
+            <div id="input-box">
                 <input type="password" name="senha"  maxlength="15" required>
                 <label>Password</label>
             </div>
 
             <!--Botao de Login-->
-            <input type="submit" value="Registrar" class="btn" name="registrar">
-        </form>
+            <input type="submit" value="Registrar" id="btn-login" name="registrar">
+            </form>
+        </div>
     </div>
     <div>
         <span id="span-reg" style="--i:0"></span>
