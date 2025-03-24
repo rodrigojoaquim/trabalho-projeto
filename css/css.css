@@ -180,20 +180,6 @@ footer{
     color: white;
 }
 
-#carrinho{
-    border-radius: 10px;
-    height: 100vh;
-    position: fixed;
-    right: 0px;
-    top: 0px;
-    width: 350px;
-    border-left: black;
-    background-color: white;
-    z-index: 3;
-    transform: translateX(350px);
-    font-size: 22px;
-}
-
 #img{
     padding-top: 70px;
     padding-left: 120px;
@@ -235,12 +221,11 @@ footer{
 #quantidade{
     appearance:textfield;
     border: 1px solid rgb(94, 93, 93);
-    height: 52px;
-    width: 42px;
     z-index: 1;
     padding-left: 20px;
+    width: 40px;
 }
-div>button{
+form>div>button{
     border:none;
     background-color: white;
     border: 1px solid rgb(94, 93, 93);
@@ -313,4 +298,86 @@ br {
     display: block;
     content: "";
     margin-bottom: 10px;
+}
+
+#carrinho{
+    border-radius: 10px;
+    height: 100vh;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: 400px;
+    border-left: black;
+    background-color: white;
+    z-index: 3;
+    transform: translateX(400px);
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+}
+
+#carrinho-todo{
+    padding: 5px;
+}
+
+#item-carrinho{
+    display: flex;
+    margin-bottom: 20px;
+    border: 2px #f2f2f2 solid;
+    border-radius: 5px;
+    margin-left: 30px;
+    box-shadow: 0 0 12px 0 rgba(0,0,0,.05),0 5px 8px 0 rgba(0,0,0,.05),0 2px 4px 0 rgba(0,0,0,.05);
+}
+
+#nome-carrinho{
+    padding-left: 20px;
+    width: 130px;
+    align-content: center;
+}
+
+#preco-carrinho{
+    right: 25px;
+    position: sticky;
+    justify-items: end;
+    display: grid;
+    height: 100px;
+    width: 75px;
+}
+
+#prod-carrinho{
+    padding-right: 10px;
+    overflow: auto;
+    height: 400px;
+    font-size: 20px;
+    scrollbar-width:thin;
+    padding-right: 10px;
+    margin-top: 20px;
+    box-shadow: 0 0 0px 0 rgba(0,0,0,.05),0 5px 0px 0 rgba(0,0,0,.05),0 2px 0px 0 rgba(0,0,0,.05);
+}
+
+#btn-carrinho{
+    background-color: white;
+    outline: none;
+    border: none;
+}
+
+#btn-comprar{
+    background-color: red;
+    color: white;
+    align-self: center;
+    justify-self: center;
+    width: 200px;
+    height: 40px;
+    box-shadow: 0 0 12px 0 rgba(0,0,0,.5),0 5px 8px 0 rgba(0,0,0,.5),0 2px 4px 0 rgba(0,0,0,.5);
+    border: none;
+    font-size: inherit;
+    cursor: pointer;
+}
+#btn-comprar:hover{
+    background-color: rgb(204, 0, 0);
+}
+
+#div-btn{
+    flex-grow: 1; 
+    display: grid;  
 }

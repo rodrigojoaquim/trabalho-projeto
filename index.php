@@ -1,11 +1,11 @@
 <?php
     require_once 'class/conection.php';
-    
     if(isset($_POST['login'])){
         $_SESSION['page'] = "/trabalho projeto";
         $newURL="login.php";
         header('Location: '.$newURL);
     }
+
 ?>
 
 
@@ -21,11 +21,16 @@
 </head>
 <body>
     <div id = "carrinho">
-        <?php 
-            foreach ($carrinho as $key){
-                echo $key['nome'].'<br>';
+        <?php
+            if(isset($carrinho)){
+                carrinho($user,$carrinho);
+            }else{
+                echo '<div id = "sem-sessao"> Inicie sessão para ver o carrinho </div>';
             }
         ?>
+        <div id = "div-btn">
+            <button type="button" id = "btn-comprar">Ver Carrinho</button>
+        </div>
     </div>
     
     <div id = "blurnav">
@@ -166,7 +171,7 @@
     document.addEventListener("click", function(event) {
 
         if (!carrinho.contains(event.target) && open === true) {
-            carrinho.style.transform = "translateX(350px)";
+            carrinho.style.transform = "translateX(400px)";
             blur.style.filter = "brightness(100%)";
             inicio.style.marginTop = "6vw";
             inicio.style.paddingTop = "0px";

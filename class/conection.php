@@ -8,8 +8,9 @@
 
     session_start();
 
-    $sessao = $_SESSION['sessao'];
-
+    if(isset($_SESSION['sessao'])){
+        $sessao = $_SESSION['sessao'];
+    }
 
 
     try {
@@ -31,19 +32,21 @@
         die("Erro ao buscar produtos: " . $e->getMessage());
     }
 
-    if ($sessao){
-        $time = $_SESSION['time'];
-        $user = $_SESSION['username'];
-
-        if ($user != NULL && time() < $time + 1000){
-            $output = $user;
-        }else{
-            $output = "Login";
-            echo '<script type="text/javascript">
-            alert("Sessão Expirada");
-            </script>'; 
-            $_SESSION['sessao'] = false;
-        }
+    if (isset($sessao)&& isset($_SESSION['time'])&&isset($_SESSION['username']) ){
+        if($sessao){
+            $time = $_SESSION['time'];
+            $user = $_SESSION['username'];
+            if ($user != NULL && time() < $time + 1000){
+                $output = $user;
+            }else{
+                $output = "Login";
+                echo '<script type="text/javascript">
+                alert("Sessão Expirada");
+                </script>'; 
+                $_SESSION['sessao'] = false;
+                $user = NULL;
+            }
+        }        
     }
     
 
@@ -70,7 +73,7 @@
 
     try {
         if($user != null){
-            $stmt = $pdo->query("SELECT produtos.nome FROM user JOIN carrinho ON user.id_user = carrinho.user_id JOIN produtos ON carrinho.product_id = produtos.id_produto where user.id_user = ".$_SESSION['id']);
+            $stmt = $pdo->query("SELECT produtos.nome,  produtos.img, produtos.id_produto, produtos.preco, carrinho.quantidade  FROM user JOIN carrinho ON user.id_user = carrinho.user_id JOIN produtos ON carrinho.product_id = produtos.id_produto where user.id_user = ".$_SESSION['id']);
             $carrinho = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     } catch (PDOException $e) {
@@ -87,6 +90,26 @@
         $sql->bindValue(":q", $quantidade);
         $sql->execute();
         return true;
+    }
+
+    function carrinho($user,$carrinho){
+        if($user != NULL){
+            echo '<div id = "carrinho-todo">';
+            echo '<div id = "prod-carrinho">';
+            foreach ($carrinho as $key){
+                echo '  <div id = "item-carrinho">
+                            <img src="'.$key['img'].'" height=100>
+                            <div id = "nome-carrinho">'.$key['nome'].'</div>
+                            <div id = "preco-carrinho">
+                                <button type="button" id = "btn-carrinho"><i class="fa fa-close"></i></button>
+                                <div>'.$key['quantidade'].'</div>
+                                <div>'.$key['preco']*$key['quantidade'].' €</div>
+                            </div>
+                        </div>';
+            }
+            echo '</div>';
+            echo '</div>';
+        }
     }
 
     function login($email, $senha)

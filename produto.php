@@ -21,9 +21,11 @@
 </head>
 <body>
     <div id = "carrinho">
-        <?php 
-            foreach ($carrinho as $key){
-                echo $key['nome'].'<br>';
+        <?php
+            if(isset($carrinho)){
+                carrinho($user,$carrinho);
+            }else{
+                echo '<div id = "sem-sessao"> Inicie sessão para ver o carrinho </div>';
             }
         ?>
     </div>
@@ -55,7 +57,7 @@
     <div id ="blur">
         <section id ="inicio">
             <div id="img">
-                <img src="<?php echo $produto[0]['img']; ?>" width = "350px" >
+                <img src="<?php echo $produto[0]['img']; ?>" width = "400px" >
                 <div id = "text">
                     <div id = "nome-produto">
                         <?php echo $produto[0]['nome']; ?>
@@ -67,7 +69,7 @@
                         <?php echo $produto[0]['preco']; ?> €
                     </div>
                     <form method="POST" id="btn">
-                        <input type="number" id ="quantidade" value="1" min="1" name = quantidade>
+                        <input type="number" id ="quantidade" name = quantidade value = "1">
                         <div style="display:grid">
                             <button type="button" onclick="aumentar()"><i class='fa fa-angle-up' style='font-size:24px'></i></button>
                             <button type="button" onclick="diminuir()"><i class='fa fa-angle-down' style='font-size:24px'></i></button>
@@ -129,7 +131,7 @@
     document.addEventListener("click", function(event) {
 
         if (!carrinho.contains(event.target) && open === true) {
-            carrinho.style.transform = "translateX(350px)";
+            carrinho.style.transform = "translateX(400px)";
             blur.style.filter = "brightness(100%)";
             inicio.style.marginTop = "6vw";
             inicio.style.paddingTop = "0px";

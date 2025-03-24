@@ -22,9 +22,11 @@
 </head>
 <body>
     <div id = "carrinho">
-        <?php 
-            foreach ($carrinho as $key){
-                echo $key['nome'].'<br>';
+        <?php
+            if(isset($carrinho)){
+                carrinho($user,$carrinho);
+            }else{
+                echo '<div id = "sem-sessao"> Inicie sessão para ver o carrinho </div>';
             }
         ?>
     </div>
@@ -139,7 +141,7 @@
     document.addEventListener("click", function(event) {
 
         if (!carrinho.contains(event.target) && open === true) {
-            carrinho.style.transform = "translateX(350px)";
+            carrinho.style.transform = "translateX(400px)";
             blur.style.filter = "brightness(100%) blur(0px)";
             inicio.style.marginTop = "6vw";
             inicio.style.paddingTop = "0px";
