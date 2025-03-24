@@ -225,7 +225,7 @@ footer{
     padding-left: 20px;
     width: 40px;
 }
-form>div>button{
+#btns>button{
     border:none;
     background-color: white;
     border: 1px solid rgb(94, 93, 93);
@@ -290,10 +290,6 @@ li {
     margin-bottom: 5px;
 }
 
-b {
-    color: #000;
-}
-
 br {
     display: block;
     content: "";
@@ -341,7 +337,7 @@ br {
     justify-items: end;
     display: grid;
     height: 100px;
-    width: 75px;
+    width: 90px;
 }
 
 #prod-carrinho{
@@ -380,4 +376,40 @@ br {
 #div-btn{
     flex-grow: 1; 
     display: grid;  
+}
+
+#carrinho-vazio{
+    height: 100%;
+    display: grid;
+}
+
+#carrinho-vazio>div{
+    align-self: center;
+    justify-self: center;
+}
+
+#carrinho-vazio-img{
+    background: #fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' color='%23808080' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M17 7V5a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v2H3v11a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4V7zM9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2H9zm10 13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9h14z'/%3E%3C/svg%3E") center 50px /auto 72px no-repeat;
+    min-height: 280px;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+#carrinho-vazio-img>div{
+    color: #808080;
+    display: block;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    top: 190px;
+    width: 180px;
+}
+
+#preco-container{
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }

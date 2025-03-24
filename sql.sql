@@ -26,20 +26,12 @@ CREATE TABLE IF NOT EXISTS `carrinho` (
   `product_id` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- A despejar dados para tabela loja.carrinho: ~10 rows (aproximadamente)
+-- A despejar dados para tabela loja.carrinho: ~2 rows (aproximadamente)
 INSERT INTO `carrinho` (`id`, `user_id`, `product_id`, `quantidade`) VALUES
-	(1, 1, 4, 1),
-	(2, 1, 2, 1),
-	(3, 1, 5, 1),
-	(4, 1, 7, 1),
-	(5, 1, 1, 1),
-	(6, 1, 8, 1),
-	(7, 1, 10, 1),
-	(8, 1, 1, 1),
-	(9, 1, 13, 7),
-	(11, 1, 21, 1);
+	(62, 1, 1, 6),
+	(65, 1, 35, 6);
 
 -- A despejar estrutura para tabela loja.produtos
 CREATE TABLE IF NOT EXISTS `produtos` (
@@ -121,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- A despejar dados para tabela loja.user: ~2 rows (aproximadamente)
+-- A despejar dados para tabela loja.user: ~1 rows (aproximadamente)
 INSERT INTO `user` (`id_user`, `nome`, `telefone`, `email`, `senha`) VALUES
 	(1, 'Rex', '9231', 'rex@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055'),
 	(8, 'teste', '213123', 'teste@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055');

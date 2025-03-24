@@ -68,14 +68,14 @@
                     <div id = "preco-produto">
                         <?php echo $produto[0]['preco']; ?> €
                     </div>
-                    <form method="POST" id="btn">
+                    <div id="btn">
                         <input type="number" id ="quantidade" name = quantidade value = "1">
-                        <div style="display:grid">
+                        <div id = "btns" style="display:grid">
                             <button type="button" onclick="aumentar()"><i class='fa fa-angle-up' style='font-size:24px'></i></button>
                             <button type="button" onclick="diminuir()"><i class='fa fa-angle-down' style='font-size:24px'></i></button>
                         </div>
-                        <button type="submit" id = "btn-compra" name = "adicionar">Adicionar ao Carrinho</button>
-                    </form>
+                        <button type="submit" id = "btn-compra" name = "adicionar" onclick="adicionar(<?php echo $produto[0]['id_produto'];?>,quantidade)">Adicionar ao Carrinho</button>
+                    </div>
                 </div>
             </div>
             <div id = "descricao">
@@ -84,11 +84,6 @@
         </section>
     </div>
 </body>
-<?php
-    if(isset($_POST['adicionar'])){
-        adicionar( $_SESSION['id'],$_GET['id'],$_POST['quantidade']);
-    }
-?>
 
 
 <script>
@@ -108,7 +103,6 @@
 
     pesquisa.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {           
-
             let value = pesquisa.value;
             window.location.href = "pesquisa.php?pesquisa=" + encodeURIComponent(value);
         }
@@ -162,6 +156,24 @@
         }else{
             quantidade.value = 1
         }
+    }
+
+    function adicionar(id_pod,quantidade){
+        fetch("class/conection.php?acao=adicionar&id_pod="+id_pod+"&quantidade="+quantidade.value)
+        atualizarCarrinho()
+    }
+
+    function retirar(id_pod){
+        fetch("class/conection.php?acao=retirar&id_pod="+id_pod)
+        atualizarCarrinho()
+    }
+
+    function atualizarCarrinho() {
+        fetch("class/conection.php?acao=atualizar")
+            .then(response => response.text())
+            .then(html => {
+                carrinho.innerHTML = html;
+            });
     }
 </script>
 </html>

@@ -25,12 +25,15 @@
             if(isset($carrinho)){
                 carrinho($user,$carrinho);
             }else{
-                echo '<div id = "sem-sessao"> Inicie sessão para ver o carrinho </div>';
+                echo '  <div id= "carrinho-vazio">
+                            <div id = "carrinho-vazio-img">
+                                <div>
+                                    <b>Inicia sessão</b> Para veres o teu carrinho
+                                </div>
+                            </div>
+                        </div>';
             }
         ?>
-        <div id = "div-btn">
-            <button type="button" id = "btn-comprar">Ver Carrinho</button>
-        </div>
     </div>
     
     <div id = "blurnav">
@@ -184,8 +187,21 @@
         }
     });
 
+    function retirar(id_pod){
+        fetch("class/conection.php?acao=retirar&id_pod="+id_pod)
+        atualizarCarrinho()
+    }
+
     function item(index){
         window.location.href = "produto.php?id=" + encodeURIComponent(index);
+    }
+
+    function atualizarCarrinho() {
+        fetch("class/conection.php?acao=atualizar")
+            .then(response => response.text())
+            .then(html => {
+                carrinho.innerHTML = html;
+            });
     }
 </script>
 </html>

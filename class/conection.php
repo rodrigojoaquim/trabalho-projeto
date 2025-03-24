@@ -71,44 +71,82 @@
         }
     }
 
-    try {
-        if($user != null){
-            $stmt = $pdo->query("SELECT produtos.nome,  produtos.img, produtos.id_produto, produtos.preco, carrinho.quantidade  FROM user JOIN carrinho ON user.id_user = carrinho.user_id JOIN produtos ON carrinho.product_id = produtos.id_produto where user.id_user = ".$_SESSION['id']);
-            $carrinho = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    function adicionarcarrinho(){
+        global $user;
+        global $pdo;
+        global $carrinho;
+
+        try {
+            if($user != null){
+                $stmt = $pdo->query("SELECT produtos.nome,  produtos.img, produtos.id_produto, produtos.preco, carrinho.quantidade  FROM user JOIN carrinho ON user.id_user = carrinho.user_id JOIN produtos ON carrinho.product_id = produtos.id_produto where user.id_user = ".$_SESSION['id']);
+                $carrinho = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            die("Erro ao buscar produtos: " . $e->getMessage());
         }
-    } catch (PDOException $e) {
-        die("Erro ao buscar produtos: " . $e->getMessage());
     }
+
+    adicionarcarrinho();
 
     function adicionar($id, $id_prod, $quantidade){
 
         global $pdo;
 
-        $sql=$pdo->prepare("INSERT INTO carrinho (user_id, product_id,quantidade) VALUES (:u, :p, :q)");
-        $sql->bindValue(":u", $id);
-        $sql->bindValue(":p", $id_prod);
-        $sql->bindValue(":q", $quantidade);
-        $sql->execute();
+        $stmt = $pdo->query('SELECT quantidade FROM carrinho  where user_id = '.$id.' AND product_id = '.$id_prod);
+        $numero = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$numero){
+            $sql=$pdo->prepare("INSERT INTO carrinho (user_id, product_id,quantidade) VALUES (:u, :p, :q)");
+            $sql->bindValue(":u", $id);
+            $sql->bindValue(":p", $id_prod);
+            $sql->bindValue(":q", $quantidade);
+            $sql->execute();
+        }else{
+            $sql=$pdo->prepare("UPDATE carrinho SET quantidade = :q where user_id = :u AND product_id = :p");
+            $sql->bindValue(":u", $id);
+            $sql->bindValue(":p", $id_prod);
+            $sql->bindValue(":q", $quantidade+$numero['quantidade']);
+            $sql->execute();
+        }
         return true;
     }
 
     function carrinho($user,$carrinho){
         if($user != NULL){
-            echo '<div id = "carrinho-todo">';
-            echo '<div id = "prod-carrinho">';
-            foreach ($carrinho as $key){
-                echo '  <div id = "item-carrinho">
-                            <img src="'.$key['img'].'" height=100>
-                            <div id = "nome-carrinho">'.$key['nome'].'</div>
-                            <div id = "preco-carrinho">
-                                <button type="button" id = "btn-carrinho"><i class="fa fa-close"></i></button>
-                                <div>'.$key['quantidade'].'</div>
-                                <div>'.$key['preco']*$key['quantidade'].' €</div>
+            if (count($carrinho)>0){
+                $preco = 0;
+                echo '<div id = "carrinho-todo">';
+                echo '<div id = "prod-carrinho">';
+                foreach ($carrinho as $key){
+                    $preco = $preco + $key['preco'] * $key['quantidade'];
+                    echo '  <div id = "item-carrinho">
+                                <img src="'.$key['img'].'" height=100>
+                                <div id = "nome-carrinho">'.$key['nome'].'</div>
+                                <div id = "preco-carrinho">
+                                    <button type="button" id = "btn-carrinho" onclick = retirar('.$key['id_produto'].')><i class="fa fa-close"></i></button>
+                                    <div>'.$key['quantidade'].'</div>
+                                    <div>'.$key['preco']*$key['quantidade'].' €</div>
+                                </div>
+                            </div>';
+                }
+                echo '</div>';
+                echo '</div>';
+                echo '  <div id = "preco-container">
+                            <div>O preço total é:</div>
+                            <div id = "preco">'.$preco.'€</div>
+                        </div>
+                        <div id = "div-btn">
+                            <button type="button" id = "btn-comprar">Ver Carrinho</button>
+                        </div>';
+            }else{
+                echo '  <div id= "carrinho-vazio">
+                            <div id = "carrinho-vazio-img">
+                                <div>
+                                    <b>O teu cesto</b> está vazio
+                                </div>
                             </div>
                         </div>';
             }
-            echo '</div>';
-            echo '</div>';
         }
     }
 
@@ -154,6 +192,21 @@
             $sql->execute();
             return true;
         }
+    }
 
-	}
+    function retirar($id_pod,$id_user){
+        global $pdo;
+        $stmt = $pdo->query('DELETE FROM carrinho WHERE product_id = '.$id_pod.' AND user_id = '.$id_user);
+    }
+
+    if (isset($_GET["acao"]) && $_GET["acao"] == "retirar") {
+        retirar($_GET['id_pod'],$_SESSION['id']);
+    }
+    if (isset($_GET["acao"]) && $_GET["acao"] == "atualizar") {
+        adicionarcarrinho();
+        echo carrinho($user,$carrinho);
+    }
+    if(isset($_GET['acao'])&& $_GET["acao"] == "adicionar" && isset($_GET['quantidade'])){
+        adicionar( $_SESSION['id'],$_GET['id_pod'],$_GET['quantidade']);
+    }
 ?>

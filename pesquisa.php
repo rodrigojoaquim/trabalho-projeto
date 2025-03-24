@@ -157,8 +157,22 @@
             body.style.background = "rgb(0,0,0,0)";
         }
     });
+
+    function retirar(id_pod){
+        fetch("class/conection.php?acao=retirar&id_pod="+id_pod)
+        atualizarCarrinho()
+    }
+
     function item(index){
         window.location.href = "produto.php?id=" + encodeURIComponent(index);
+    }
+
+    function atualizarCarrinho() {
+        fetch("class/conection.php?acao=atualizar")
+            .then(response => response.text())
+            .then(html => {
+                carrinho.innerHTML = html;
+            });
     }
 </script>
 </html>
