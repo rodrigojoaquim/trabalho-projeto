@@ -6,13 +6,10 @@
     $user = NULL;
     $output = "Login";
 
+    //inicia a sessão para passar dados de uma pagina para a outra
     session_start();
 
-    if(isset($_SESSION['sessao'])){
-        $sessao = $_SESSION['sessao'];
-    }
-
-
+    // conecta a base de dados
     try {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -20,6 +17,7 @@
         die("Erro na conexão: " . $e->getMessage());
     }
 
+    //vai buscar os produtos para meter nos destaques da pagina principal
     try {
         $stmt = $pdo->query("SELECT * FROM produtos where class = 'novidade'");
         $novidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -32,8 +30,9 @@
         die("Erro ao buscar produtos: " . $e->getMessage());
     }
 
-    if (isset($sessao)&& isset($_SESSION['time'])&&isset($_SESSION['username']) ){
-        if($sessao){
+    //verifica se ja passou o tempo para dar loggout da conta
+    if (isset($_SESSION['sessao'])&& isset($_SESSION['time'])&&isset($_SESSION['username']) ){
+        if($_SESSION['sessao']){
             $time = $_SESSION['time'];
             $user = $_SESSION['username'];
             if ($user != NULL && time() < $time + 1000){
@@ -49,7 +48,7 @@
         }        
     }
     
-
+    // verifica se existe o parametro de pesquisa e executa a query para fazer a pesquisa
     if (isset($_GET['pesquisa'])) {
         $mensagem = urldecode($_GET['pesquisa']);
         $pesquisa = "SELECT * From produtos where nome LIKE '%$mensagem%'";
@@ -60,17 +59,20 @@
             die("Erro ao buscar produtos: " . $e->getMessage());
         }
     }
+
+    // verifica se existe o parametro de id para is buscar as informações do produto
     if (isset($_GET['id'])) {
         $idprod = urldecode($_GET['id']);
         $query = "SELECT * From produtos where id_produto = $idprod";
         try {
             $stmt = $pdo->query($query);
-            $produto = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $produto = $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erro ao buscar produtos: " . $e->getMessage());
         }
     }
 
+    //faz a pesquisa para ter as informações do carrinho da conta
     function adicionarcarrinho(){
         global $user;
         global $pdo;
@@ -88,6 +90,7 @@
 
     adicionarcarrinho();
 
+    // quando chamada adiciona o produto ao carrinho
     function adicionar($id, $id_prod, $quantidade){
 
         global $pdo;
@@ -95,7 +98,7 @@
         $stmt = $pdo->query('SELECT quantidade FROM carrinho  where user_id = '.$id.' AND product_id = '.$id_prod);
         $numero = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$numero){
+        if (!$numero){//verifica se o produto ja existe no carrinho da conta, se sim adiciona a quantidade se nao cria o registro
             $sql=$pdo->prepare("INSERT INTO carrinho (user_id, product_id,quantidade) VALUES (:u, :p, :q)");
             $sql->bindValue(":u", $id);
             $sql->bindValue(":p", $id_prod);
@@ -111,6 +114,7 @@
         return true;
     }
 
+    // quando chamada retorna o html do carrinho
     function carrinho($user,$carrinho){
         if($user != NULL){
             if (count($carrinho)>0){
@@ -138,7 +142,7 @@
                         <div id = "div-btn">
                             <button type="button" id = "btn-comprar">Ver Carrinho</button>
                         </div>';
-            }else{
+            }else{//carrinho vazio
                 echo '  <div id= "carrinho-vazio">
                             <div id = "carrinho-vazio-img">
                                 <div>
@@ -150,6 +154,7 @@
         }
     }
 
+    //verifica se a password e email estão corretos e retorna o nome de utilizador e o seu id
     function login($email, $senha)
 	{
         global $pdo;
@@ -160,17 +165,19 @@
 		$nome->execute();
 		if($nome->rowCount()>0)
 		{
-			//entrar no sistema (sessão)
+			
 			$dado=$nome->fetch();
 			$_SESSION['username']=$dado['nome'];
             $_SESSION['id']=$dado['id_user'];
-			return true; //registado com sucesso
+			return true;
 		}
 		else
 		{
-			return false; //não foi possivel registar
+			return false;
 		}
 	}
+
+    // verifica se ja existe alguem com o email registrado e cria o registro se nao houver
     function registar($nome, $telefone, $email, $senha)
 	{
         global $pdo;
@@ -194,11 +201,13 @@
         }
     }
 
+    // quando chamado retira o produto do carrinho
     function retirar($id_pod,$id_user){
         global $pdo;
         $stmt = $pdo->query('DELETE FROM carrinho WHERE product_id = '.$id_pod.' AND user_id = '.$id_user);
     }
 
+    //verifica se o parametro acao existe e o seu valor para poder chamar a função correta
     if (isset($_GET["acao"]) && $_GET["acao"] == "retirar") {
         retirar($_GET['id_pod'],$_SESSION['id']);
     }

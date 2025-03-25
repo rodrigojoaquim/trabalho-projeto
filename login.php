@@ -27,30 +27,25 @@
         <div id="login-box">
             <h2>Login</h2>
             <form method="POST">
-                
-                <!--Email-->
+
                 <div id="input-box">
                     <input type="email" name="Email" required>
                     <label>Email</label>
                 </div>
 
-                <!--Password-->
                 <div id="input-box">
                     <input type="password" name="senha" required>
                     <label>Password</label>
                 </div>
 
-                <!--Botao de Login-->
                 <button type="submit" id="btn-login" name="loggin">Login</button>
 
-                <!--Signup-->
                 <div id="signup-link">
                     <a href="singup.php">Signup</a>
                 </div>
             </form>
         </div>
     </div>
-    <div id="mensagem">
     <?php
 		//verificar se clicou no botão
 		if(isset($_POST['loggin']))
@@ -70,13 +65,26 @@
                     $_SESSION['sessao'] = true;
                     
                 }else{
-                    echo "Credenciais Erradas";
+                    echo '<script type="text/javascript">
+                    alert("Credenciais Erradas");
+                    </script>'; 
                 }
 			}else{
-				echo "Preencha todos os campos";
+				echo '<script type="text/javascript">
+                alert("Credenciais Erradas");
+                </script>'; 
 			}
 		}
 	?>
-    </div>
-    
+    <footer>
+        <hr>
+        <a>ELETROZONE</a>
+        <br>
+        <div>© ELETROZONE</div>
+        <br>
+        <div> 
+            Legal Stuff | Privacy Policy | Security | Website Accessibility | Manage Cookies
+        </div>
+        <hr>
+    </footer>
 </body>

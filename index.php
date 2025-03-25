@@ -157,6 +157,7 @@
     const body = document.body;
     let open = false;
 
+    // verifica se foi pressionado o enter
     pesquisa.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {           
 
@@ -164,6 +165,8 @@
             window.location.href = "pesquisa.php?pesquisa=" + encodeURIComponent(value);
         }
     });
+
+    //estilo do carrinho para abrir e fechar
     carrinho.style.transition = "all 1.5s";
     function carrinhos(){
         carrinho.style.transform = "translateX(0px)";
@@ -195,15 +198,18 @@
         }
     });
 
+    // quando clico no X do carrinho chama esta função que vai chamar a função retirar no fichero conection.php
     function retirar(id_pod){
         fetch("class/conection.php?acao=retirar&id_pod="+id_pod)
         atualizarCarrinho()
     }
 
+    //manda me para a pagina produto com o parametro id para que possa ir buscar os dados a base de dados
     function item(index){
         window.location.href = "produto.php?id=" + encodeURIComponent(index);
     }
 
+    // é chamada para ir atualizar o carrinho quando é retirado o produto    
     function atualizarCarrinho() {
         fetch("class/conection.php?acao=atualizar")
             .then(response => response.text())

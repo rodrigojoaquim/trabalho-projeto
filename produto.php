@@ -57,16 +57,16 @@
     <div id ="blur">
         <section id ="inicio">
             <div id="img">
-                <img src="<?php echo $produto[0]['img']; ?>" width = "400px" >
+                <img src="<?php echo $produto['img']; ?>" width = "400px" >
                 <div id = "text">
                     <div id = "nome-produto">
-                        <?php echo $produto[0]['nome']; ?>
+                        <?php echo $produto['nome']; ?>
                     </div>
                     <div id = "descricao-produto">
-                        <?php echo $produto[0]['descricao']; ?>
+                        <?php echo $produto['descricao']; ?>
                     </div>
                     <div id = "preco-produto">
-                        <?php echo $produto[0]['preco']; ?> €
+                        <?php echo $produto['preco']; ?> €
                     </div>
                     <div id="btn">
                         <input type="number" id ="quantidade" name = quantidade value = "1">
@@ -74,12 +74,12 @@
                             <button type="button" onclick="aumentar()"><i class='fa fa-angle-up' style='font-size:24px'></i></button>
                             <button type="button" onclick="diminuir()"><i class='fa fa-angle-down' style='font-size:24px'></i></button>
                         </div>
-                        <button type="submit" id = "btn-compra" name = "adicionar" onclick="adicionar(<?php echo $produto[0]['id_produto'];?>,quantidade)">Adicionar ao Carrinho</button>
+                        <button type="submit" id = "btn-compra" name = "adicionar" onclick="adicionar(<?php echo $produto['id_produto'];?>,quantidade)">Adicionar ao Carrinho</button>
                     </div>
                 </div>
             </div>
             <div id = "descricao">
-                <?php echo $produto[0]['descricao_comp']; ?>
+                <?php echo $produto['descricao_comp']; ?>
             </div>
         </section>
         <footer>
@@ -112,12 +112,15 @@
         center.style.marginRight = "17px";
     }
 
+    // verifica se foi pressionado o enter
     pesquisa.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {           
             let value = pesquisa.value;
             window.location.href = "pesquisa.php?pesquisa=" + encodeURIComponent(value);
         }
     });
+
+    //estilo do carrinho para abrir e fechar
     carrinho.style.transition = "all 1.5s";
     function carrinhos(){
         carrinho.style.transform = "translateX(0px)";
@@ -151,12 +154,14 @@
         }
     });
 
+    // se o valor posto na quantidade foi invalido define para 1
     quantidade.addEventListener("change", function(){
         if(Number(quantidade.value) === 0 || quantidade.value<1 ){
             quantidade.value = 1;
         }
     })
 
+    //aumeta e diminui o valor quando é carregado nos botões
     function aumentar(){
         quantidade.value = Number(quantidade.value) + 1;
        
@@ -169,16 +174,19 @@
         }
     }
 
+    //chama a função para adicionar ao carrinho no ficheiro conection.php
     function adicionar(id_pod,quantidade){
         fetch("class/conection.php?acao=adicionar&id_pod="+id_pod+"&quantidade="+quantidade.value)
         atualizarCarrinho()
     }
 
+    // quando clico no X do carrinho chama esta função que vai chamar a função retirar no fichero conection.php
     function retirar(id_pod){
         fetch("class/conection.php?acao=retirar&id_pod="+id_pod)
         atualizarCarrinho()
     }
 
+    // é chamada para ir atualizar o carrinho quando é retirado o produto    
     function atualizarCarrinho() {
         fetch("class/conection.php?acao=atualizar")
             .then(response => response.text())
