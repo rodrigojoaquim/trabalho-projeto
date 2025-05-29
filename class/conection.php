@@ -140,7 +140,7 @@
                             <div id = "preco">'.$preco.'€</div>
                         </div>
                         <div id = "div-btn">
-                            <button type="button" id = "btn-comprar">Ver Carrinho</button>
+                            <button type="button" id = "btn-comprar">Fazer Checkout</button>
                         </div>';
             }else{//carrinho vazio
                 echo '  <div id= "carrinho-vazio">
