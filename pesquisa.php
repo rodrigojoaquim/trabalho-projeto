@@ -2,7 +2,7 @@
     require_once 'class/conection.php';
     $pesquisa = $_GET['pesquisa'];
 
-    if (isset($_POST['login'])){
+    if (isset($_POST['login'])&& $output == "Login"){
         $_SESSION['page'] = "pesquisa.php?pesquisa=".$pesquisa;
         $newURL="login.php";
         header('Location: '.$newURL);
@@ -142,7 +142,7 @@
         carrinho.style.transform = "translateX(0px)";
         blur.style.filter = "brightness(50%) blur(5px)";
         inicio.style.marginTop = "0px";
-        inicio.style.paddingTop = "6vw";
+        inicio.style.paddingTop = "100px";
         nav.style.filter = "brightness(50%)";
         body.style.overflow = "hidden";
         body.style.marginRight = "17px";
@@ -157,7 +157,7 @@
         if (!carrinho.contains(event.target) && open === true) {
             carrinho.style.transform = "translateX(400px)";
             blur.style.filter = "brightness(100%) blur(0px)";
-            inicio.style.marginTop = "6vw";
+            inicio.style.marginTop = "100px";
             inicio.style.paddingTop = "0px";
             nav.style.filter = "brightness(100%)";
             body.style.overflow = "visible";
